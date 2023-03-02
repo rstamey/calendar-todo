@@ -10,25 +10,60 @@ $(function () {
   // useful when saving the description in local storage?
   //
   $('.saveBtn').click(function() {
-  console.log("clicked");
-  var timeBlockId = $(this).closest('.time-block').attr('id');
-  //var timeBlock = document.querySelector('.hour')
-  var userInput = document.getElementById('10-desc').value;
   
+  //var timeBlockId = $(this).closest('.time-block').attr('id');
+  
+  var userInput = $(this).siblings('.description').val();
+
+  var timeBlockId = $(this).parent().attr('id');
+
+
   localStorage.setItem(timeBlockId, userInput);
-  console.log(userInput);
+  
 });
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
+
+  // get hour with Day.js
+const currentHour = dayjs().hour();
+
+// loop the calender blocks
+$(".time-block").each(function () {
+ 
+  var id = $(this).attr("id");
+  var blockHour = parseInt(id.split("-")[1]); 
+
+  // compare calender hour to  current hour and add class
+  if (blockHour < currentHour) {
+    $(this).addClass("past");
+  } else if (blockHour === currentHour) {
+    $(this).addClass("present");
+  } else {
+    $(this).addClass("future");
+  }
+});
+
+
+
+
+
+
+
+
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
 
+
+
+  
+  $(function setCurrentTime() {
   const date = new Date();
-console.log(date);
-document.getElementById("currentDay").innerHTML=(date)
+
+document.getElementById("currentDay").innerHTML=(date);
+  });
 });
